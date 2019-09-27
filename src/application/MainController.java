@@ -85,7 +85,8 @@ public class MainController {
 
     @FXML
     public void clickItem(MouseEvent event) {
-        if (event.getClickCount() == 2) selectedEmployee = employeeTableView.getSelectionModel().getSelectedItem();
+        if (event.getClickCount() == 1) selectedEmployee = employeeTableView.getSelectionModel().getSelectedItem();
+
     }
 
     @FXML
@@ -99,6 +100,7 @@ public class MainController {
             genderTextField.setText(selectedEmployee.getGender());
             ssnTextField.setText(String.valueOf(selectedEmployee.getSSN()));
             salaryTextField.setText(String.valueOf(selectedEmployee.getSalary()));
+            selectedEmployee = null; // reset selected employee
         }
     }
 
@@ -110,6 +112,7 @@ public class MainController {
             database.deleteEmployee(selectedEmployee.getID());
             employees = database.getEmployees();
             mapToTable(employees);
+            selectedEmployee = null; // reset selected employee
         }
     }
 
@@ -137,6 +140,7 @@ public class MainController {
             database.addEmployee(employee);
             employees = database.getEmployees();
             mapToTable(employees);
+
         }
     }
 

@@ -62,13 +62,13 @@ class DBController {
     void addEmployee(Employee employee) {
         String command =
                 "INSERT INTO `employees`(`ID`, `FIRST_NAME`, `SURNAME`, `SSN`, `DOB`, `SALARY`, `GENDER`) VALUES (" +
-                       "\'" +  employee.getID() + "\'" + "," +
-                        "\'" +employee.getFirstName() + "," +
-                        "\'" + employee.getSurname() + "," +
-                        "\'" + employee.getSSN() + "," +
-                        "\'" + employee.getDOB() + "," +
-                        "\'" + employee.getSalary() + "," +
-                        "\'" + employee.getGender() + ")";
+                        "\'" + employee.getID() + "\'," +
+                        "\'" + employee.getFirstName() + "\'," +
+                        "\'" + employee.getSurname() + "\'," +
+                        "\'" + employee.getSSN() + "\'," +
+                        "\'" + employee.getDOB() + "\'," +
+                        "\'" + employee.getSalary() + "\'," +
+                        "\'" + employee.getGender() + "\'" + ")";
         try {
             Statement stmt = conn.createStatement();
             System.out.println(command);
