@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="78.0" prefWidth="800.0" spacing="20.0" style="-fx-background-color: lightblue;">
+         <children>
+            <Label text="Employee Details">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <GridPane layoutX="14.0" layoutY="112.0" prefHeight="227.0" prefWidth="281.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="198.5" minWidth="10.0" prefWidth="92.5" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="301.5" minWidth="10.0" prefWidth="188.5" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="SSn:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="DOB:" GridPane.rowIndex="1">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="First Name:" GridPane.rowIndex="3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="Surname: " GridPane.rowIndex="4">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="Salary:" GridPane.rowIndex="6">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="Gender: " GridPane.rowIndex="7">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="ssnTextField" prefHeight="25.0" prefWidth="235.0" GridPane.columnIndex="1" />
+            <TextField fx:id="dobTextField" prefHeight="25.0" prefWidth="235.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="firstNameTextField" prefHeight="25.0" prefWidth="272.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="surnameTextField" prefHeight="25.0" prefWidth="235.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="salaryTextField" prefHeight="25.0" prefWidth="235.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="genderTextField" prefHeight="25.0" prefWidth="235.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+         </children>
+      </GridPane>
+      <HBox alignment="CENTER" layoutX="106.0" layoutY="355.0" prefHeight="46.0" prefWidth="189.0" spacing="10.0">
+         <children>
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#addEmployee" prefHeight="25.0" prefWidth="65.0" text="Add" />
+            <Button fx:id="searchButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Search" />
+         </children>
+      </HBox>
+      <TableView fx:id="employeeTableView" layoutX="321.0" layoutY="112.0" onMouseClicked="#clickItem" prefHeight="227.0" prefWidth="463.0">
+        <columns>
+            <TableColumn fx:id="IDColumn" prefWidth="36.0" text="ID" />
+          <TableColumn fx:id="firstNameColumn" prefWidth="76.0" text="First Name" />
+          <TableColumn fx:id="surnameColumn" prefWidth="76.5" text="Surname" />
+            <TableColumn fx:id="DOBColumn" prefWidth="72.5" text="DOB" />
+            <TableColumn fx:id="genderColumn" prefWidth="64.5" text="Gender" />
+            <TableColumn fx:id="ssnColumn" prefWidth="69.0" text="SSN" />
+            <TableColumn fx:id="salaryColumn" prefWidth="67.5" text="Salary" />
+        </columns>
+      </TableView>
+      <HBox alignment="CENTER" layoutX="320.0" layoutY="355.0" prefHeight="46.0" prefWidth="463.0" spacing="10.0">
+         <children>
+            <Button fx:id="updateButton" mnemonicParsing="false" onAction="#updateEmployee" prefHeight="25.0" prefWidth="65.0" text="Update" />
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteEmployee" prefHeight="25.0" prefWidth="65.0" text="Delete" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
