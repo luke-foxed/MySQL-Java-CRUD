@@ -1,14 +1,10 @@
 package application;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 public class Main extends Application {
 
@@ -18,7 +14,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            root = FXMLLoader.load(getClass().getResource("/application/sample.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/application/view.fxml"));
             Main.primaryStage = primaryStage;
             primaryStage.setResizable(false);
             primaryStage.setTitle("Employee Manager");

@@ -13,37 +13,24 @@ class DBController {
         Connection conn = null;
         Properties connectionProps = new Properties();
         String userName = "root";
-        connectionProps.put("user", userName);
         String password = "root";
+        connectionProps.put("user", userName);
         connectionProps.put("password", password);
 
         String serverName = "localhost";
         int portNumber = 3306;
         String dbName = "test";
-        conn = DriverManager.getConnection("jdbc:mysql://"
-                        + serverName + ":" + portNumber + "/" + dbName,
-                connectionProps);
-
+        conn = DriverManager.getConnection(
+                "jdbc:mysql://" + serverName + ":" +
+                        portNumber + "/" + dbName, connectionProps);
         return conn;
     }
 
     ArrayList<Employee> getEmployees() throws SQLException {
         ArrayList<Employee> employees = new ArrayList<>();
         String command = "SELECT * FROM " + this.tableName;
-        ResultSet result = execute(conn, command);
-        while (result.next()) {
-            Employee employee = new Employee(
-                    result.getInt("ID"),
-                    result.getString("FIRST_NAME"),
-                    result.getString("SURNAME"),
-                    result.getString("DOB"),
-                    result.getString("GENDER"),
-                    result.getInt("SSN"),
-                    result.getInt("SALARY"));
-            employees.add(employee);
-        }
-
-        return employees;
+        ResultSet result = executeSelectQuery(conn, command);
+        return formatEmployees(employees, result);
     }
 
     void deleteEmployee(int employeeID) {
@@ -77,7 +64,7 @@ class DBController {
         }
     }
 
-    void updateEmployee(Employee employee) {
+    void updateEmployee(Employee employee) throws SQLException{
         System.out.println("Updating");
         String command = "UPDATE `employees` SET " +
                 "`FIRST_NAME`= \'" + employee.getFirstName() + "\'," +
@@ -87,21 +74,20 @@ class DBController {
                 "`SALARY`= \'" + employee.getSalary() + "\'," +
                 "`GENDER`= \'" + employee.getGender() + "\'" +
                 " WHERE `ID` =" + employee.getID();
-        try {
+
             Statement stmt = conn.createStatement();
             System.out.println(command);
             stmt.executeUpdate(command);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     ArrayList<Employee> findEmployee(String surname) throws SQLException {
         ArrayList<Employee> employees = new ArrayList<>();
         String command = "SELECT * FROM `employees` WHERE `SURNAME` = \'" + surname + "\'";
-        ResultSet result = execute(conn, command);
+        ResultSet result = executeSelectQuery(conn, command);
+        return formatEmployees(employees, result);
+    }
 
+    private ArrayList<Employee> formatEmployees(ArrayList<Employee> employees, ResultSet result) throws SQLException {
         while (result.next()) {
             Employee employee = new Employee(
                     result.getInt("ID"),
@@ -116,7 +102,7 @@ class DBController {
         return employees;
     }
 
-    private ResultSet execute(Connection conn, String command) {
+    private ResultSet executeSelectQuery(Connection conn, String command) {
         Statement stmt;
         ResultSet result = null;
         try {

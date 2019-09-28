@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.IntStream;
@@ -85,6 +86,7 @@ public class MainController {
                 database.run();
                 employees = database.getEmployees();
                 mapToTable(employees);
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -116,27 +118,35 @@ public class MainController {
     }
 
     @FXML
-    public void deleteEmployee() throws SQLException {
+    public void deleteEmployee() {
         if (selectedEmployee == null) {
             alertHelper("WARNING", "ERROR", "Please double click an employee from the table first!");
         } else {
-            database.deleteEmployee(selectedEmployee.getID());
-            employees = database.getEmployees();
-            mapToTable(employees);
-            selectedEmployee = null; // reset selected employee
+
+            
+            try {
+                database.deleteEmployee(selectedEmployee.getID());
+                employees = database.getEmployees();
+                mapToTable(employees);
+                selectedEmployee = null; // reset selected employee
+
+            } catch (SQLException e) {
+                alertHelper("WARNING", "DELETING ERROR", e.getMessage());
+            }
         }
     }
 
     @FXML
-    public void addEmployee() throws SQLException {
+    public void addEmployee() {
 
         if (checkValidation()) {
             alertHelper("WARNING", "MISSING FIELDS", "Please fill out all fields!");
         } else {
-            int ID = employees.size() + 1;
+            int ID = employees.size() + 1; // assign Employee with new ID
 
+            // Format date for mySQL
             String formattedDate = DOBField.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            System.out.println(formattedDate);
+
             try {
                 Employee employee = new Employee(ID, firstNameTextField.getText(),
                         surnameTextField.getText(),
@@ -146,28 +156,41 @@ public class MainController {
                         Integer.parseInt(salaryTextField.getText()));
 
                 if (isUpdating) {
-                    employee.setID(selectedEmployee.getID()); // keep the ID
+                    employee.setID(selectedEmployee.getID()); // keep the ID of selected employee
                     database.updateEmployee(employee);
                     selectedEmployee = null; // reset selected employee
                     isUpdating = false; // reset updating flag
                 } else {
                     database.addEmployee(employee);
                 }
-                employees = database.getEmployees();
-                mapToTable(employees);
-                clearTextFields();
-                addButton.setText("ADD");
-            } catch (NumberFormatException e) {
-                alertHelper("WARNING", "Numeric Fields containing characters", e.getMessage());
+
+                try {
+                    employees = database.getEmployees();
+                    mapToTable(employees);
+                    clearTextFields();
+                    addButton.setText("ADD");
+
+                } catch (SQLException e) {
+                    alertHelper("ERROR", "ADDING EMPLOYEE ERROR", e.getMessage());
+                }
+
+            } catch (NumberFormatException | SQLException e) {
+                alertHelper("ERROR", "ERROR", e.getMessage());
             }
         }
     }
 
     @FXML
-    private void searchEmployee() throws SQLException {
+    private void searchEmployee() {
         String surname = searchTextField.getText();
-        ArrayList<Employee> matchedEmployees = database.findEmployee(surname);
-        mapToTable(matchedEmployees);
+
+        try {
+            ArrayList<Employee> matchedEmployees = database.findEmployee(surname);
+            mapToTable(matchedEmployees);
+
+        } catch (SQLException e) {
+            alertHelper("ERROR", "SEARCH EMPLOYEE ERROR", e.getMessage());
+        }
     }
 
     private void mapToTable(ArrayList<Employee> employees) {
@@ -187,8 +210,8 @@ public class MainController {
             case "WARNING":
                 alert = new Alert(Alert.AlertType.WARNING);
                 break;
-            case "INFORMATION":
-                alert = new Alert(Alert.AlertType.INFORMATION);
+            case "ERROR":
+                alert = new Alert(Alert.AlertType.ERROR);
                 break;
             case "CONFIRMATION":
                 alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -213,17 +236,14 @@ public class MainController {
 
     private boolean checkValidation() {
         boolean isError;
-        // using streams for quicker field validation
-        isError = Stream.of(
+        isError = Arrays.asList(
                 firstNameTextField.getText(),
                 surnameTextField.getText(),
                 DOBField.getValue(),
                 ssnTextField.getText(),
                 salaryTextField.getText(),
                 genderComboBox.getSelectionModel().getSelectedItem()
-        ).anyMatch(i -> i.equals(""));
-
-
+        ).contains("");
         return isError;
     }
 }
