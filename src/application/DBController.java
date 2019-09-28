@@ -10,7 +10,7 @@ class DBController {
     private Connection conn = null;
 
     private Connection getConnection() throws SQLException {
-        Connection conn = null;
+        Connection conn;
         Properties connectionProps = new Properties();
         String userName = "root";
         String password = "root";

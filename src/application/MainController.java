@@ -1,23 +1,17 @@
 package application;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class MainController {
 
@@ -123,7 +117,7 @@ public class MainController {
             alertHelper("WARNING", "ERROR", "Please double click an employee from the table first!");
         } else {
 
-            
+
             try {
                 database.deleteEmployee(selectedEmployee.getID());
                 employees = database.getEmployees();

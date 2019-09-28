@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="lib">
+    <archive path="C:/Users/lukef/Documents/openjfx-13_windows-x64_bin-sdk/javafx-sdk-13/lib/src.zip" />
+    <archive path="C:/Users/lukef/Documents/openjfx-13_windows-x64_bin-sdk/javafx-sdk-13/lib/javafx-swt.jar" />
+    <archive path="C:/Users/lukef/Documents/openjfx-13_windows-x64_bin-sdk/javafx-sdk-13/lib/javafx.web.jar" />
+    <archive path="C:/Users/lukef/Documents/openjfx-13_windows-x64_bin-sdk/javafx-sdk-13/lib/javafx.base.jar" />
+    <archive path="C:/Users/lukef/Documents/openjfx-13_windows-x64_bin-sdk/javafx-sdk-13/lib/javafx.fxml.jar" />
+    <archive path="C:/Users/lukef/Documents/openjfx-13_windows-x64_bin-sdk/javafx-sdk-13/lib/javafx.media.jar" />
+    <archive path="C:/Users/lukef/Documents/openjfx-13_windows-x64_bin-sdk/javafx-sdk-13/lib/javafx.swing.jar" />
+    <archive path="C:/Users/lukef/Documents/openjfx-13_windows-x64_bin-sdk/javafx-sdk-13/lib/javafx.controls.jar" />
+    <archive path="C:/Users/lukef/Documents/openjfx-13_windows-x64_bin-sdk/javafx-sdk-13/lib/javafx.graphics.jar" />
+  </library>
+  <library name="mysql-connector-java-8.0.17">
+    <archive path="C:/Users/lukef/IdeaProjects/Dist-Syst-Assignment-1/mysql-connector-java-8.0.17.jar" />
+  </library>
+  <library name="javafx-sdk-13">
+    <archive path="C:/Users/lukef/Documents/openjfx-13_windows-x64_bin-sdk/javafx-sdk-13" />
+  </library>
+</eclipse-userlibraries>
+

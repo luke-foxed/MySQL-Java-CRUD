@@ -18,123 +18,139 @@
 
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
-<AnchorPane prefHeight="475.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
-   <children>
-      <HBox alignment="CENTER" prefHeight="78.0" prefWidth="800.0" spacing="20.0" style="-fx-background-color: #845EC2;">
-         <children>
-            <Label text="EMPLOYEE DETAILS" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="28.0" />
-               </font>
-            </Label>
-         </children>
-         <effect>
-            <InnerShadow blurType="GAUSSIAN" color="#0000007c" height="59.55" radius="24.0875" width="38.8" />
-         </effect>
-      </HBox>
-      <GridPane layoutX="14.0" layoutY="112.0" prefHeight="227.0" prefWidth="281.0">
-        <columnConstraints>
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="198.5" minWidth="10.0" prefWidth="92.5" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="301.5" minWidth="10.0" prefWidth="188.5" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label text="SSN:">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="DOB:" GridPane.rowIndex="1">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="First Name:" GridPane.rowIndex="3">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="Surname: " GridPane.rowIndex="4">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="Salary:" GridPane.rowIndex="6">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="Gender: " GridPane.rowIndex="7">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="ssnTextField" prefHeight="25.0" prefWidth="235.0" GridPane.columnIndex="1" />
-            <TextField fx:id="firstNameTextField" prefHeight="25.0" prefWidth="272.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="surnameTextField" prefHeight="25.0" prefWidth="235.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="salaryTextField" prefHeight="25.0" prefWidth="235.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <DatePicker fx:id="DOBField" editable="false" prefHeight="25.0" prefWidth="193.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-             <ComboBox fx:id="genderComboBox" prefHeight="25.0" prefWidth="201.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                 <items>
-                     <FXCollections fx:factory="observableArrayList">
-                         <String fx:value="Male" />
-                         <String fx:value="Female" />
-                     </FXCollections>
-                 </items>
-             </ComboBox>
-         </children>
-      </GridPane>
-      <HBox alignment="CENTER" layoutX="106.0" layoutY="355.0" prefHeight="46.0" prefWidth="189.0" spacing="10.0">
-         <children>
-            <Button id="add" fx:id="addButton" mnemonicParsing="false" onAction="#addEmployee" prefHeight="35.0" prefWidth="97.0" style="-fx-background-radius: 20px;" text="ADD" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-         </children>
-      </HBox>
-      <TableView fx:id="employeeTableView" layoutX="321.0" layoutY="112.0" onMouseClicked="#clickItem" prefHeight="227.0" prefWidth="463.0">
-        <columns>
-            <TableColumn fx:id="IDColumn" prefWidth="36.0" text="ID" />
-          <TableColumn fx:id="firstNameColumn" prefWidth="76.0" text="First Name" />
-          <TableColumn fx:id="surnameColumn" prefWidth="76.5" text="Surname" />
-            <TableColumn fx:id="DOBColumn" prefWidth="72.5" text="DOB" />
-            <TableColumn fx:id="genderColumn" prefWidth="64.5" text="Gender" />
-            <TableColumn fx:id="ssnColumn" prefWidth="69.0" text="SSN" />
-            <TableColumn fx:id="salaryColumn" prefWidth="67.5" text="Salary" />
-        </columns>
-      </TableView>
-      <HBox alignment="CENTER" layoutX="320.0" layoutY="355.0" prefHeight="46.0" prefWidth="463.0" spacing="10.0">
-         <children>
-            <Button id="update" fx:id="updateButton" mnemonicParsing="false" onAction="#updateEmployee" prefHeight="35.0" prefWidth="70.0" style="-fx-background-radius: 20;;" text="UPDATE" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font></Button>
-            <Button id="delete" fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteEmployee" prefHeight="35.0" prefWidth="70.0" style="-fx-background-radius: 20px;;" text="DELETE" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font></Button>
-            <Line endX="-99.70710754394531" endY="45.29289245605469" startX="-100.0" stroke="#7a7a7aa2" />
-            <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="111.0" promptText="Surname..." />
-            <Button id="search" fx:id="searchButton" mnemonicParsing="false" onAction="#searchEmployee" prefHeight="35.0" prefWidth="70.0" style="-fx-background-radius: 20px;;" text="SEARCH" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font></Button>
-            <Button id="reset" fx:id="searchButton1" mnemonicParsing="false" onAction="#initialize" prefHeight="35.0" prefWidth="70.0" style="-fx-background-radius: 20px;;" text="RESET" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-         </children>
-      </HBox>
-   </children>
+<AnchorPane prefHeight="475.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+    <HBox alignment="CENTER" prefHeight="78.0" prefWidth="800.0" spacing="20.0" style="-fx-background-color: #845EC2;">
+        <children>
+          <Label text="EMPLOYEE DETAILS" textFill="WHITE">
+              <font>
+                  <Font name="System Bold" size="28.0"/>
+              </font>
+          </Label>
+        </children>
+        <effect>
+          <InnerShadow blurType="GAUSSIAN" color="#0000007c" height="59.55" radius="24.0875" width="38.8"/>
+        </effect>
+    </HBox>
+    <GridPane layoutX="14.0" layoutY="112.0" prefHeight="227.0" prefWidth="281.0">
+      <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="198.5" minWidth="10.0" prefWidth="92.5"/>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="301.5" minWidth="10.0" prefWidth="188.5"/>
+      </columnConstraints>
+      <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+      </rowConstraints>
+        <children>
+          <Label text="SSN:">
+              <font>
+                  <Font size="14.0"/>
+              </font>
+          </Label>
+          <Label text="DOB:" GridPane.rowIndex="1">
+              <font>
+                  <Font size="14.0"/>
+              </font>
+          </Label>
+          <Label text="First Name:" GridPane.rowIndex="3">
+              <font>
+                  <Font size="14.0"/>
+              </font>
+          </Label>
+          <Label text="Surname: " GridPane.rowIndex="4">
+              <font>
+                  <Font size="14.0"/>
+              </font>
+          </Label>
+          <Label text="Salary:" GridPane.rowIndex="6">
+              <font>
+                  <Font size="14.0"/>
+              </font>
+          </Label>
+          <Label text="Gender: " GridPane.rowIndex="7">
+              <font>
+                  <Font size="14.0"/>
+              </font>
+          </Label>
+          <TextField fx:id="ssnTextField" prefHeight="25.0" prefWidth="235.0" GridPane.columnIndex="1"/>
+          <TextField fx:id="firstNameTextField" prefHeight="25.0" prefWidth="272.0" GridPane.columnIndex="1"
+                     GridPane.rowIndex="3"/>
+          <TextField fx:id="surnameTextField" prefHeight="25.0" prefWidth="235.0" GridPane.columnIndex="1"
+                     GridPane.rowIndex="4"/>
+          <TextField fx:id="salaryTextField" prefHeight="25.0" prefWidth="235.0" GridPane.columnIndex="1"
+                     GridPane.rowIndex="6"/>
+          <DatePicker fx:id="DOBField" editable="false" prefHeight="25.0" prefWidth="193.0" GridPane.columnIndex="1"
+                      GridPane.rowIndex="1"/>
+            <ComboBox fx:id="genderComboBox" prefHeight="25.0" prefWidth="201.0" GridPane.columnIndex="1"
+                      GridPane.rowIndex="7">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Male"/>
+                        <String fx:value="Female"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
+        </children>
+    </GridPane>
+    <HBox alignment="CENTER" layoutX="106.0" layoutY="355.0" prefHeight="46.0" prefWidth="189.0" spacing="10.0">
+        <children>
+          <Button id="add" fx:id="addButton" mnemonicParsing="false" onAction="#addEmployee" prefHeight="35.0"
+                  prefWidth="97.0" style="-fx-background-radius: 20px;" text="ADD" textFill="WHITE">
+              <font>
+                  <Font name="System Bold" size="12.0"/>
+              </font>
+          </Button>
+        </children>
+    </HBox>
+    <TableView fx:id="employeeTableView" layoutX="321.0" layoutY="112.0" onMouseClicked="#clickItem" prefHeight="227.0"
+               prefWidth="463.0">
+      <columns>
+          <TableColumn fx:id="IDColumn" prefWidth="36.0" text="ID"/>
+          <TableColumn fx:id="firstNameColumn" prefWidth="76.0" text="First Name"/>
+          <TableColumn fx:id="surnameColumn" prefWidth="76.5" text="Surname"/>
+          <TableColumn fx:id="DOBColumn" prefWidth="72.5" text="DOB"/>
+          <TableColumn fx:id="genderColumn" prefWidth="64.5" text="Gender"/>
+          <TableColumn fx:id="ssnColumn" prefWidth="69.0" text="SSN"/>
+          <TableColumn fx:id="salaryColumn" prefWidth="67.5" text="Salary"/>
+      </columns>
+    </TableView>
+    <HBox alignment="CENTER" layoutX="320.0" layoutY="355.0" prefHeight="46.0" prefWidth="463.0" spacing="10.0">
+        <children>
+          <Button id="update" fx:id="updateButton" mnemonicParsing="false" onAction="#updateEmployee"
+                  prefHeight="35.0" prefWidth="70.0" style="-fx-background-radius: 20;;" text="UPDATE"
+                  textFill="WHITE">
+              <font>
+                  <Font name="System Bold" size="12.0"/>
+              </font>
+          </Button>
+          <Button id="delete" fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteEmployee"
+                  prefHeight="35.0" prefWidth="70.0" style="-fx-background-radius: 20px;;" text="DELETE"
+                  textFill="WHITE">
+              <font>
+                  <Font name="System Bold" size="12.0"/>
+              </font>
+          </Button>
+          <Line endX="-99.70710754394531" endY="45.29289245605469" startX="-100.0" stroke="#7a7a7aa2"/>
+          <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="111.0" promptText="Surname..."/>
+          <Button id="search" fx:id="searchButton" mnemonicParsing="false" onAction="#searchEmployee"
+                  prefHeight="35.0" prefWidth="70.0" style="-fx-background-radius: 20px;;" text="SEARCH"
+                  textFill="WHITE">
+              <font>
+                  <Font name="System Bold" size="12.0"/>
+              </font>
+          </Button>
+          <Button id="reset" fx:id="searchButton1" mnemonicParsing="false" onAction="#initialize" prefHeight="35.0"
+                  prefWidth="70.0" style="-fx-background-radius: 20px;;" text="RESET" textFill="WHITE">
+              <font>
+                  <Font name="System Bold" size="12.0"/>
+              </font>
+          </Button>
+        </children>
+    </HBox>
 </AnchorPane>
