@@ -2,13 +2,18 @@ package application;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -20,12 +25,11 @@ public class MainController {
     private ArrayList<Employee> employees = new ArrayList<>();
     private Employee selectedEmployee = null;
 
-
     @FXML
     public TextField ssnTextField;
 
     @FXML
-    public TextField dobTextField;
+    public DatePicker DOBField;
 
     @FXML
     public TextField firstNameTextField;
@@ -37,11 +41,10 @@ public class MainController {
     public TextField salaryTextField;
 
     @FXML
-    public TextField genderTextField;
-
-    @FXML
     public TextField searchTextField;
 
+    @FXML
+    public ComboBox<String> genderComboBox = new ComboBox<>();
     @FXML
     public Button addButton;
 
@@ -50,9 +53,6 @@ public class MainController {
 
     @FXML
     public Button deleteButton;
-
-    @FXML
-    public Button resetButton;
 
     @FXML
     public TableView<Employee> employeeTableView = new TableView<>();
@@ -101,13 +101,17 @@ public class MainController {
         if (selectedEmployee == null) {
             alertHelper("WARNING", "ERROR", "Please double click an employee from the table first!");
         } else {
+            // convert date into suitable MySQL format
+            LocalDate date = LocalDate.parse(selectedEmployee.getDOB());
+
             firstNameTextField.setText(selectedEmployee.getFirstName());
             surnameTextField.setText(selectedEmployee.getSurname());
-            dobTextField.setText(selectedEmployee.getDOB());
-            genderTextField.setText(selectedEmployee.getGender());
+            DOBField.setValue(date);
+            genderComboBox.getSelectionModel().select(selectedEmployee.getGender());
             ssnTextField.setText(String.valueOf(selectedEmployee.getSSN()));
             salaryTextField.setText(String.valueOf(selectedEmployee.getSalary()));
             isUpdating = true;
+            addButton.setText("CONFIRM");
         }
     }
 
@@ -126,35 +130,36 @@ public class MainController {
     @FXML
     public void addEmployee() throws SQLException {
 
-        // using streams for quicker field validation
-        if (Stream.of(
-                firstNameTextField.getText(),
-                surnameTextField.getText(),
-                dobTextField.getText(),
-                ssnTextField.getText(),
-                salaryTextField.getText(),
-                genderTextField.getText()
-        ).anyMatch(i -> i.equals(""))) {
+        if (checkValidation()) {
             alertHelper("WARNING", "MISSING FIELDS", "Please fill out all fields!");
         } else {
             int ID = employees.size() + 1;
-            Employee employee = new Employee(ID, firstNameTextField.getText(),
-                    surnameTextField.getText(),
-                    dobTextField.getText(),
-                    genderTextField.getText(),
-                    Integer.parseInt(ssnTextField.getText()),
-                    Integer.parseInt(salaryTextField.getText()));
-            if (isUpdating) {
-                employee.setID(selectedEmployee.getID()); // keep the ID
-                database.updateEmployee(employee);
-                selectedEmployee = null; // reset selected employee
-                isUpdating = false; // reset updating flag
-            } else {
-                database.addEmployee(employee);
+
+            String formattedDate = DOBField.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            System.out.println(formattedDate);
+            try {
+                Employee employee = new Employee(ID, firstNameTextField.getText(),
+                        surnameTextField.getText(),
+                        formattedDate,
+                        genderComboBox.getValue(),
+                        Integer.parseInt(ssnTextField.getText()),
+                        Integer.parseInt(salaryTextField.getText()));
+
+                if (isUpdating) {
+                    employee.setID(selectedEmployee.getID()); // keep the ID
+                    database.updateEmployee(employee);
+                    selectedEmployee = null; // reset selected employee
+                    isUpdating = false; // reset updating flag
+                } else {
+                    database.addEmployee(employee);
+                }
+                employees = database.getEmployees();
+                mapToTable(employees);
+                clearTextFields();
+                addButton.setText("ADD");
+            } catch (NumberFormatException e) {
+                alertHelper("WARNING", "Numeric Fields containing characters", e.getMessage());
             }
-            employees = database.getEmployees();
-            mapToTable(employees);
-            clearTextFields();
         }
     }
 
@@ -200,13 +205,25 @@ public class MainController {
     private void clearTextFields() {
         firstNameTextField.clear();
         surnameTextField.clear();
-        dobTextField.clear();
+        DOBField.setValue(null);
         ssnTextField.clear();
         salaryTextField.clear();
-        genderTextField.clear();
+        genderComboBox.getSelectionModel().clearSelection();
     }
 
-    private void validationHelper() {
+    private boolean checkValidation() {
+        boolean isError;
+        // using streams for quicker field validation
+        isError = Stream.of(
+                firstNameTextField.getText(),
+                surnameTextField.getText(),
+                DOBField.getValue(),
+                ssnTextField.getText(),
+                salaryTextField.getText(),
+                genderComboBox.getSelectionModel().getSelectedItem()
+        ).anyMatch(i -> i.equals(""));
 
+
+        return isError;
     }
 }
