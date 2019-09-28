@@ -21,7 +21,7 @@ public class Main extends Application {
             root = FXMLLoader.load(getClass().getResource("/application/sample.fxml"));
             Main.primaryStage = primaryStage;
             primaryStage.setResizable(false);
-            primaryStage.setTitle("Binary Convert");
+            primaryStage.setTitle("Employee Manager");
             Scene scene = new Scene(root, 800, 450);
             primaryStage.setScene(scene);
             primaryStage.show();

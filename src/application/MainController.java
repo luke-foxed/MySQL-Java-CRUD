@@ -15,9 +15,11 @@ import java.util.stream.Stream;
 
 public class MainController {
 
+    private boolean isUpdating = false;
     private DBController database = new DBController();
-    ArrayList<Employee> employees = new ArrayList<>();
-    Employee selectedEmployee = null;
+    private ArrayList<Employee> employees = new ArrayList<>();
+    private Employee selectedEmployee = null;
+
 
     @FXML
     public TextField ssnTextField;
@@ -38,6 +40,9 @@ public class MainController {
     public TextField genderTextField;
 
     @FXML
+    public TextField searchTextField;
+
+    @FXML
     public Button addButton;
 
     @FXML
@@ -45,6 +50,9 @@ public class MainController {
 
     @FXML
     public Button deleteButton;
+
+    @FXML
+    public Button resetButton;
 
     @FXML
     public TableView<Employee> employeeTableView = new TableView<>();
@@ -86,7 +94,6 @@ public class MainController {
     @FXML
     public void clickItem(MouseEvent event) {
         if (event.getClickCount() == 1) selectedEmployee = employeeTableView.getSelectionModel().getSelectedItem();
-
     }
 
     @FXML
@@ -100,7 +107,7 @@ public class MainController {
             genderTextField.setText(selectedEmployee.getGender());
             ssnTextField.setText(String.valueOf(selectedEmployee.getSSN()));
             salaryTextField.setText(String.valueOf(selectedEmployee.getSalary()));
-            selectedEmployee = null; // reset selected employee
+            isUpdating = true;
         }
     }
 
@@ -137,11 +144,25 @@ public class MainController {
                     genderTextField.getText(),
                     Integer.parseInt(ssnTextField.getText()),
                     Integer.parseInt(salaryTextField.getText()));
-            database.addEmployee(employee);
+            if (isUpdating) {
+                employee.setID(selectedEmployee.getID()); // keep the ID
+                database.updateEmployee(employee);
+                selectedEmployee = null; // reset selected employee
+                isUpdating = false; // reset updating flag
+            } else {
+                database.addEmployee(employee);
+            }
             employees = database.getEmployees();
             mapToTable(employees);
-
+            clearTextFields();
         }
+    }
+
+    @FXML
+    private void searchEmployee() throws SQLException {
+        String surname = searchTextField.getText();
+        ArrayList<Employee> matchedEmployees = database.findEmployee(surname);
+        mapToTable(matchedEmployees);
     }
 
     private void mapToTable(ArrayList<Employee> employees) {
@@ -170,8 +191,22 @@ public class MainController {
             default:
                 alert = new Alert(Alert.AlertType.NONE);
         }
+
         alert.setTitle(title);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void clearTextFields() {
+        firstNameTextField.clear();
+        surnameTextField.clear();
+        dobTextField.clear();
+        ssnTextField.clear();
+        salaryTextField.clear();
+        genderTextField.clear();
+    }
+
+    private void validationHelper() {
+
     }
 }
